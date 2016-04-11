@@ -55,7 +55,7 @@ public class MessagePackDataformatForPojoTest
         byte[] bytes = objectMapper.writeValueAsBytes(nestedListPojo);
         NestedListPojo value = objectMapper.readValue(bytes, NestedListPojo.class);
         assertEquals(nestedListPojo.s, value.s);
-        assertArrayEquals(nestedListPojo.strs.toArray(), value.strs.toArray());
+        assertEquals(nestedListPojo.strs, value.strs);
     }
 
     @Test
@@ -115,9 +115,9 @@ public class MessagePackDataformatForPojoTest
         String scheme = new String(bytes, Charset.forName("UTF-8"));
         assertThat(scheme, not(containsString("name"))); // validating schema doesn't contains keys, that's just array
         ComplexPojo value = objectMapper.readValue(bytes, ComplexPojo.class);
-        assertEquals("komamitsu", value.name);
-        assertEquals(20, value.age);
-        assertArrayEquals(complexPojo.values.toArray(), value.values.toArray());
-        assertEquals(complexPojo.grades.get("math"), value.grades.get("math"));
+        assertEquals(complexPojo.name, value.name);
+        assertEquals(complexPojo.age, value.age);
+        assertEquals(complexPojo.values, value.values);
+        assertEquals(complexPojo.grades, value.grades);
     }
 }
